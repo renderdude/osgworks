@@ -41,6 +41,9 @@
 
 
 bool CCObject_readLocalData( osg::Object& obj, osgDB::Input& fr );
+
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
+
 bool CCObject_writeLocalData( const osg::Object& obj, osgDB::Output& fw );
 
 osgDB::RegisterDotOsgWrapperProxy CCObject_Proxy
@@ -51,22 +54,46 @@ osgDB::RegisterDotOsgWrapperProxy CCObject_Proxy
     CCObject_readLocalData,
     CCObject_writeLocalData
 );
+#else
+osgDB::RegisterDotOsgWrapperProxy CCObject_Proxy
+(
+ new osgwTools::CameraConfigObject,
+ "CameraConfigObject",
+ "Object CameraConfigObject",
+ CCObject_readLocalData,
+ NULL
+ );
+#endif
 
 bool CCInfo_readLocalData( osg::Object& obj, osgDB::Input& fr );
+
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
+
 bool CCInfo_writeLocalData( const osg::Object& obj, osgDB::Output& fw );
+osgDB::RegisterDotOsgWrapperProxy CCInfo_Proxy
+(
+ new osgwTools::CameraConfigInfo,
+ "CameraConfigInfo",
+ "Object CameraConfigInfo",
+ CCInfo_readLocalData,
+ CCInfo_writeLocalData
+ );
+#else
+
 osgDB::RegisterDotOsgWrapperProxy CCInfo_Proxy
 (
     new osgwTools::CameraConfigInfo,
     "CameraConfigInfo",
     "Object CameraConfigInfo",
     CCInfo_readLocalData,
-    CCInfo_writeLocalData
+    NULL
 );
-
+#endif
 
 bool readMatrix( osg::Matrix& matrix, osgDB::Input& fr, const char* keyword="Matrix" );
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 bool writeMatrix( const osg::Matrixd& matrix, osgDB::Output& fw, const char* keyword="Matrix" );
-
+#endif
 
 bool
 CCInfo_readLocalData( osg::Object& obj, osgDB::Input& fr )
@@ -90,6 +117,8 @@ CCInfo_readLocalData( osg::Object& obj, osgDB::Input& fr )
 
     return( advance );
 }
+
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 bool
 CCInfo_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 {
@@ -101,6 +130,7 @@ CCInfo_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 
     return( true );
 }
+#endif
 
 bool
 CCObject_readLocalData( osg::Object& obj, osgDB::Input& fr )
@@ -139,6 +169,7 @@ CCObject_readLocalData( osg::Object& obj, osgDB::Input& fr )
     return( advance );
 }
 
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 bool
 CCObject_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 {
@@ -154,7 +185,7 @@ CCObject_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 
     return( true );
 }
-
+#endif
 /*@}*/
 
 /*@}*/

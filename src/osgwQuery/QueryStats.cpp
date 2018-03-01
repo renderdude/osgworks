@@ -22,8 +22,9 @@
 
 #include <osg/Camera>
 #include <osg/Geode>
+#ifndef IM_OSG_SIZE_REDUCTION
 #include <osgText/Text>
-
+#endif
 #include <sstream>
 
 
@@ -58,7 +59,7 @@ osg::Node* QueryStats::getSceneGraph()
 
     osg::Geode* geode = new osg::Geode;
     _cam->addChild( geode );
-
+#ifndef IM_OSG_SIZE_REDUCTION
     double textX( .85 );
     double textY( -.6 );
     const double textYDelta( -.04 );
@@ -140,7 +141,7 @@ osg::Node* QueryStats::getSceneGraph()
     _poccl->setCharacterSize( .04 );
     _poccl->setText( "0" );
     geode->addDrawable( _poccl.get() );
-
+#endif
     return( _cam.get() );
 }
 
@@ -161,6 +162,7 @@ void QueryStats::clear()
         _numCGreaterB = _numFrustum = 0;
 
     const std::string zeroStr( "0" );
+#ifndef IM_OSG_SIZE_REDUCTION
     if( _frames.valid() )
         _frames->setText( zeroStr );
     if( _queries.valid() )
@@ -175,7 +177,10 @@ void QueryStats::clear()
         _frustum->setText( zeroStr );
     if( _poccl.valid() )
         _poccl->setText( zeroStr );
+#endif
 }
+  
+#ifndef IM_OSG_SIZE_REDUCTION
 unsigned int QueryStats::incFrames( unsigned int n )
 {
     if( _consoleDisplay )
@@ -242,7 +247,7 @@ void QueryStats::setPoccl( const float poccl )
         _poccl->setText( ostr.str() );
     }
 }
-
+#endif
 
 
 QueryStatsHandler::QueryStatsHandler( osgwQuery::QueryStats* qs )

@@ -29,7 +29,9 @@
 #include <osg/Geode>
 #include <osg/Geometry>
 #include <osg/Timer>
+#ifndef IM_OSG_SIZE_REDUCTION
 #include <osgText/Text>
+#endif
 #include <osg/BoundingBox>
 #include <osgDB/ReadFile>
 #include <osgViewer/Viewer>

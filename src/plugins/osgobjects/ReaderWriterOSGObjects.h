@@ -44,8 +44,9 @@ public:
     const char* className() const;
 
     virtual osgDB::ReaderWriter::ReadResult readObject( const std::string& fileName, const Options* options=NULL ) const;
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
     virtual osgDB::ReaderWriter::WriteResult writeObject( const osg::Object& object, const std::string& fileName, const Options* options=NULL ) const;
-
+#endif
 protected:
 };
 

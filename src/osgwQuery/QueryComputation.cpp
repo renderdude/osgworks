@@ -125,11 +125,11 @@ bool QueryComputation::cullOperation( osg::NodeVisitor* nv, osg::RenderInfo& ren
         // If query was active, we were _not_ frustum culled.
         wasFrustumCulled = false;
     }
-
+#ifndef IM_OSG_SIZE_REDUCTION
     // Report if frustum culled
     if( _debugStats.valid() && wasFrustumCulled )
         _debugStats->incFrustum();
-
+#endif
     const double cbbOiSqRt = 1. / ( dOi * sqrt( width / height ) * 2. * tan( thetaOver2 ) );
     const double cbbOi = cbbOiSqRt * cbbOiSqRt * _AbbOiOver6;
 
@@ -157,9 +157,11 @@ bool QueryComputation::cullOperation( osg::NodeVisitor* nv, osg::RenderInfo& ren
         pocclOi = pcovOi;
     else /* previously occluded */
         pocclOi = 1.;
+  
+#ifndef IM_OSG_SIZE_REDUCTION
     if( _debugStats.valid() )
         _debugStats->setPoccl( (float)pocclOi );
-
+#endif
 
 
     /** Implements the Guthe paper'a "QueryReasonable" function, pseudocode
@@ -209,27 +211,30 @@ bool QueryComputation::cullOperation( osg::NodeVisitor* nv, osg::RenderInfo& ren
     {
         queryReasonable = false;
         osg::notify( osg::INFO ) << "Case 1: False. renderTime < queryTime" << std::endl;
-
+#ifndef IM_OSG_SIZE_REDUCTION
         if( _debugStats.valid() )
             _debugStats->incRtLessQt();
+#endif
     }
 
     else if( qdc->_wasOccluded )
     {
         queryReasonable = true;
         osg::notify( osg::INFO ) << "Case 2: True. Was occluded" << std::endl;
-
+#ifndef IM_OSG_SIZE_REDUCTION
         if( _debugStats.valid() )
             _debugStats->incOccluded();
+#endif
     }
 
     else if( nodeCost > ( framesSinceLastQuery * nodeBenefit ) )
     {
         queryReasonable = false;
         osg::notify( osg::INFO ) << "Case 3: False. cost > benefit" << std::endl;
-
+#ifndef IM_OSG_SIZE_REDUCTION
         if( _debugStats.valid() )
             _debugStats->incCGreaterB();
+#endif
     }
 
     else
@@ -275,9 +280,10 @@ bool QueryComputation::cullOperation( osg::NodeVisitor* nv, osg::RenderInfo& ren
             cv->popStateSet();
 
         _lastQueryFrame = currentFrame;
-
+#ifndef IM_OSG_SIZE_REDUCTION
         if( _debugStats.valid() )
             _debugStats->incQueries();
+#endif
     }
 
 

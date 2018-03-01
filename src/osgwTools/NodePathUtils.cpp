@@ -24,8 +24,9 @@
 #include <osg/MatrixTransform>
 #include <osg/Notify>
 
+#undef BOOST_FOUND
 #ifdef BOOST_FOUND
-#  include <boost/algorithm/string/replace.hpp>
+//#  include <boost/algorithm/string/replace.hpp>
 #endif
 #include <string>
 #include <vector>

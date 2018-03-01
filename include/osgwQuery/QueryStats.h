@@ -26,7 +26,9 @@
 
 #include <osg/Node>
 #include <osg/Camera>
+#ifndef IM_OSG_SIZE_REDUCTION
 #include <osgText/Text>
+#endif
 #include <osgGA/GUIEventHandler>
 
 
@@ -65,6 +67,8 @@ public:
     bool getConsoleDisplay() const { return( _consoleDisplay ); }
 
     void clear();
+  
+#ifndef IM_OSG_SIZE_REDUCTION
     unsigned int incFrames( unsigned int n=1 );
     unsigned int incQueries( unsigned int n=1 );
     unsigned int incOccluded( unsigned int n=1 );
@@ -73,10 +77,11 @@ public:
     unsigned int incFrustum( unsigned int n=1 );
 
     void setPoccl( const float poccl );
-
+#endif
 protected:
+#ifndef IM_OSG_SIZE_REDUCTION
     unsigned int internalInc( unsigned int& val, osgText::Text* text, unsigned int n );
-
+#endif
     osg::ref_ptr< osg::Node > _node;
 
     bool _accum;
@@ -90,6 +95,7 @@ protected:
     unsigned int _numFrustum;
 
     osg::ref_ptr< osg::Camera > _cam;
+#ifndef IM_OSG_SIZE_REDUCTION
     osg::ref_ptr< osgText::Text > _labels;
     osg::ref_ptr< osgText::Text > _frames;
     osg::ref_ptr< osgText::Text > _queries;
@@ -98,6 +104,7 @@ protected:
     osg::ref_ptr< osgText::Text > _cGreaterB;
     osg::ref_ptr< osgText::Text > _frustum;
     osg::ref_ptr< osgText::Text > _poccl;
+#endif
 };
 
 

@@ -73,7 +73,7 @@ void Capabilities::query()
     glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS_ARB, &_shaderUnits );
     glGetIntegerv( GL_MAX_TEXTURE_COORDS_ARB, &_texCoords );
     glGetIntegerv( GL_MAX_VERTEX_ATTRIBS, &_vertexAttribs );
-    glGetIntegerv( GL_MAX_DRAW_BUFFERS, &_drawBuffers );
+    //glGetIntegerv( GL_MAX_DRAW_BUFFERS, &_drawBuffers );
 }
 
 void Capabilities::dump( std::ostream& ostr ) const

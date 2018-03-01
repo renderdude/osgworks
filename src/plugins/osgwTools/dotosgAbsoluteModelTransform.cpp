@@ -39,17 +39,27 @@
 
 
 bool AMT_readLocalData( osg::Object& obj, osgDB::Input& fr );
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 bool AMT_writeLocalData( const osg::Object& obj, osgDB::Output& fw );
 
+osgDB::RegisterDotOsgWrapperProxy AMT_Proxy
+(
+ new osgwTools::AbsoluteModelTransform,
+ "AbsoluteModelTransform",
+ "Object Node Transform AbsoluteModelTransform Group",
+ AMT_readLocalData,
+ AMT_writeLocalData
+ );
+#else
 osgDB::RegisterDotOsgWrapperProxy AMT_Proxy
 (
     new osgwTools::AbsoluteModelTransform,
     "AbsoluteModelTransform",
     "Object Node Transform AbsoluteModelTransform Group",
     AMT_readLocalData,
-    AMT_writeLocalData
+    NULL
 );
-
+#endif
 
 bool readMatrix( osg::Matrix& matrix, osgDB::Input& fr, const char* keyword="Matrix" )
 {
@@ -86,6 +96,7 @@ bool readMatrix( osg::Matrix& matrix, osgDB::Input& fr, const char* keyword="Mat
     return iteratorAdvanced;
 }
 
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 bool writeMatrix( const osg::Matrix& matrix, osgDB::Output& fw, const char* keyword="Matrix" )
 {
     fw.indent() << keyword <<" {" << std::endl;
@@ -98,7 +109,7 @@ bool writeMatrix( const osg::Matrix& matrix, osgDB::Output& fw, const char* keyw
     fw.indent() << "}"<< std::endl;
     return true;
 }
-
+#endif
 
 
 bool AMT_readLocalData( osg::Object& obj, osgDB::Input& fr )
@@ -116,6 +127,7 @@ bool AMT_readLocalData( osg::Object& obj, osgDB::Input& fr )
     return( advance );
 }
 
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 bool AMT_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 {
     const osgwTools::AbsoluteModelTransform& amt = static_cast< const osgwTools::AbsoluteModelTransform& >( obj );
@@ -124,7 +136,7 @@ bool AMT_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 
     return( true );
 }
-
+#endif
 /*@}*/
 
 /*@}*/

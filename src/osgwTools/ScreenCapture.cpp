@@ -194,8 +194,10 @@ ScreenCapture::WriteImageThread::run()
     {
         if( image != NULL )
         {
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
             osg::notify( osg::INFO ) << "ScreenCapture: Writing \"" << image->getFileName() << "\"" << std::endl;
             osgDB::writeImageFile( *image, image->getFileName() );
+#endif
             image = NULL;
         }
         else

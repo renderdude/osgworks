@@ -58,6 +58,7 @@ public:
         {
             OSG_WARN << "TextCallback got non-osg::Geode" << std::endl;
         }
+#ifndef IM_OSG_SIZE_REDUCTION
         osgText::Text* t = dynamic_cast<osgText::Text*> (g->getDrawable(0));
         if( t == NULL )
         {
@@ -66,7 +67,7 @@ public:
         char text [16];
         sprintf(text, "%.2f",_sc->getCurrentValue());
         t->setText(text);
-        
+#endif
         traverse( node, nv );
     }
 protected:
@@ -342,6 +343,8 @@ SliderControl::getSliderControlSubgraph()
         osg::StateSet* stateset = bar->getOrCreateStateSet();
         stateset->setMode(GL_LIGHTING,osg::StateAttribute::OFF);
         slider->getOrCreateStateSet()->setMode(GL_LIGHTING,osg::StateAttribute::OFF);
+      
+#ifndef IM_OSG_SIZE_REDUCTION
         osgText::Font* font = osgText::readFontFile("fonts/cour.ttf");
 
 
@@ -427,6 +430,7 @@ SliderControl::getSliderControlSubgraph()
             //geode->getOrCreateStateSet()->setRenderBinDetails(0,"RenderBin");
             _mt->addChild(geode);
         }
+
         {//forward button
             osg::Geode* f = new osg::Geode();
             
@@ -554,7 +558,7 @@ SliderControl::getSliderControlSubgraph()
             bar->addChild(r);
             _reverse = reverse;
         }
-
+#endif
 
         
         bar->setEventCallback(new ButtonPickHandler(this));

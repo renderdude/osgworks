@@ -33,8 +33,10 @@
 #include <osg/Program>
 #include <osg/Uniform>
 #include <osg/Geometry>
+#ifndef IM_OSG_SIZE_REDUCTION
 #include <osgSim/DOFTransform>
 #include <osgText/Text>
+#endif
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -346,13 +348,16 @@ void CountsVisitor::apply( const osg::Geode& node, osg::Drawable* draw )
 
     _totalDrawables++;
     osg::Geometry* geom;
+#ifndef IM_OSG_SIZE_REDUCTION
     if (dynamic_cast<osgText::Text*>( draw ) != NULL)
     {
         _texts++;
         osg::ref_ptr<osg::Object> rp = (osg::Object*)draw;
         _uTexts.insert( rp );
     }
-    else if ( (geom = dynamic_cast<osg::Geometry*>( draw )) != NULL)
+    else
+#endif
+    if ( (geom = dynamic_cast<osg::Geometry*>( draw )) != NULL)
     {
         _geometries++;
         osg::ref_ptr<osg::Object> rp = (osg::Object*)geom;
@@ -674,7 +679,7 @@ void
 CountsVisitor::apply( osg::Transform& node )
 {
     pushStateSet( node.getStateSet() );
-
+#ifndef IM_OSG_SIZE_REDUCTION
     if (dynamic_cast<osgSim::DOFTransform*>( &node ) != NULL)
     {
         _dofTransforms++;
@@ -682,6 +687,7 @@ CountsVisitor::apply( osg::Transform& node )
         _uDofTransforms.insert( rp );
     }
     else
+#endif
     {
         _transforms++;
         osg::ref_ptr<osg::Object> rp = (osg::Object*)&node;

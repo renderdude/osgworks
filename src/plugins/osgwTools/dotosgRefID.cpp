@@ -37,6 +37,8 @@
 
 
 bool RefID_readLocalData( osg::Object& obj, osgDB::Input& fr );
+
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 bool RefID_writeLocalData( const osg::Object& obj, osgDB::Output& fw );
 
 osgDB::RegisterDotOsgWrapperProxy RefID_Proxy
@@ -47,7 +49,16 @@ osgDB::RegisterDotOsgWrapperProxy RefID_Proxy
     RefID_readLocalData,
     RefID_writeLocalData
 );
-
+#else
+osgDB::RegisterDotOsgWrapperProxy RefID_Proxy
+(
+     new osgwTools::RefID,
+     "RefID",
+     "Object RefID",
+     RefID_readLocalData,
+     NULL
+ );
+#endif
 
 
 bool RefID_readLocalData( osg::Object& obj, osgDB::Input& fr )
@@ -65,6 +76,8 @@ bool RefID_readLocalData( osg::Object& obj, osgDB::Input& fr )
     return( advance );
 }
 
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
+
 bool RefID_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 {
     const osgwTools::RefID& rid = static_cast< const osgwTools::RefID& >( obj );
@@ -73,7 +86,7 @@ bool RefID_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 
     return( true );
 }
-
+#endif
 /*@}*/
 
 /*@}*/

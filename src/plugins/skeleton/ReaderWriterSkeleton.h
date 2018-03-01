@@ -49,8 +49,9 @@ public:
     const char* className() const;
 
     virtual osgDB::ReaderWriter::ReadResult readNode( const std::string& fileName, const Options* options=NULL ) const;
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
     virtual osgDB::ReaderWriter::WriteResult writeNode( const osg::Node& node, const std::string& fileName, const Options* options=NULL ) const;
-
+#endif
 protected:
 };
 

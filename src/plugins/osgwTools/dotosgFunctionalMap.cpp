@@ -37,6 +37,9 @@
 
 
 bool FunctionalMap_readLocalData( osg::Object& obj, osgDB::Input& fr );
+
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
+
 bool FunctionalMap_writeLocalData( const osg::Object& obj, osgDB::Output& fw );
 
 osgDB::RegisterDotOsgWrapperProxy FunctionalMap_Proxy
@@ -47,8 +50,16 @@ osgDB::RegisterDotOsgWrapperProxy FunctionalMap_Proxy
     FunctionalMap_readLocalData,
     FunctionalMap_writeLocalData
 );
-
-
+#else
+osgDB::RegisterDotOsgWrapperProxy FunctionalMap_Proxy
+(
+   new osgwMx::FunctionalMap,
+   "FunctionalMap",
+   "Object FunctionalMap",
+   FunctionalMap_readLocalData,
+   NULL
+ );
+#endif
 
 bool FunctionalMap_readLocalData( osg::Object& obj, osgDB::Input& fr )
 {
@@ -67,6 +78,8 @@ bool FunctionalMap_readLocalData( osg::Object& obj, osgDB::Input& fr )
     return( true );
 }
 
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
+
 bool FunctionalMap_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 {
     const osgwMx::FunctionalMap& map = static_cast< const osgwMx::FunctionalMap& >( obj );
@@ -79,7 +92,7 @@ bool FunctionalMap_writeLocalData( const osg::Object& obj, osgDB::Output& fw )
 
     return( true );
 }
-
+#endif
 /*@}*/
 
 /*@}*/

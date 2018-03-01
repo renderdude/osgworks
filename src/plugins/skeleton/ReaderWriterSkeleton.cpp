@@ -94,6 +94,7 @@ ReaderWriterSkeleton::readNode( const std::string& fileName, const Options* opti
 
     return( root );
 }
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 
 osgDB::ReaderWriter::WriteResult
 ReaderWriterSkeleton::writeNode( const osg::Node& node, const std::string& fileName, const Options* options ) const
@@ -128,6 +129,6 @@ ReaderWriterSkeleton::writeNode( const osg::Node& node, const std::string& fileN
     // Write out the data-stripped scene graph to the actual file name.
     return( rw->writeNode( *nonConstNode, subName, options ) );
 }
-
+#endif
 
 REGISTER_OSGPLUGIN( skeleton, ReaderWriterSkeleton )

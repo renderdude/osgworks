@@ -442,6 +442,7 @@ osg::Array* Array_readLocalData( osgDB::Input& fr)
     return return_array;
 }
 
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 
 bool Array_writeLocalData( const osg::Array& array, osgDB::Output& fw )
 {
@@ -628,7 +629,7 @@ bool Array_writeLocalData( const osg::Array& array, osgDB::Output& fw )
             return false;
     }
 }
-
+#endif
 
 
 osgDB::ReaderWriter::ReadResult
@@ -657,6 +658,7 @@ ReaderWriterOSGObjects::readObject( const std::string& fileName, const Options* 
         return( ReadResult::ERROR_IN_READING_FILE );
 }
 
+#ifndef IM_OSG_NO_WRITE_SERIALIZATION
 osgDB::ReaderWriter::WriteResult
 ReaderWriterOSGObjects::writeObject( const osg::Object& obj, const std::string& fileName, const Options* options ) const
 {
@@ -677,6 +679,6 @@ ReaderWriterOSGObjects::writeObject( const osg::Object& obj, const std::string& 
 
     return( result ? WriteResult::FILE_SAVED : WriteResult::ERROR_IN_WRITING_FILE );
 }
-
+#endif
 
 REGISTER_OSGPLUGIN( osgobjects, ReaderWriterOSGObjects )
