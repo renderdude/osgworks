@@ -61,7 +61,8 @@ GeometryModifier::apply( osg::Geode& geode )
     {
         osgUtil::Optimizer::MergeGeometryVisitor mgv;
         mgv.setTargetMaximumNumberOfVertices(1000000);
-        mgv.mergeGeode(geode);
+        mgv.apply(geode);
+        //mgv.mergeGeode(geode);
     }
 
     for(unsigned int i=0;i<geode.getNumDrawables();++i)
