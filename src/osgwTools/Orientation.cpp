@@ -170,13 +170,13 @@ void Orientation::makeMatrix( osg::Matrix& result, const double yaw, const doubl
 osg::Vec3d Orientation::getYPR( const osg::Quat& q ) const
 {
     osg::Matrix m;
-    m.set( q );
+    m.makeRotate( q );
     return( getYPR( m ) );
 }
 void Orientation::getYPR( const osg::Quat& q, double& yaw, double& pitch, double& roll ) const
 {
     osg::Matrix m;
-    m.set( q );
+    m.makeRotate( q );
     getYPR( m, yaw, pitch, roll );
 }
 osg::Vec3d Orientation::getYPR( const osg::Matrix& m ) const
